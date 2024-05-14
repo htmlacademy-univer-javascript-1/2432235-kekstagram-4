@@ -7,7 +7,6 @@ function checkLength(text, maxLen) {
   }
 }
 checkLength('писюн',5);
-
 function findPalindrome (text) {
   let abc = text.replaceAll(' ');
   abc = text.toUpperCase();

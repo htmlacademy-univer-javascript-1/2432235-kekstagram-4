@@ -1,42 +1,28 @@
-# Как работать с Git на проекте
-
-Поддерживайте ваш репозиторий обновлённым. Когда наставник принимает ваш пулреквест, он попадает в репозиторий Академии, но не в ваш форк.
-
-#### 1. Не коммитьте ничего самостоятельно в `master` вашего репозитория
-
-Это помешает вам аккуратно обновлять ваш репозиторий, могут возникнуть конфликты.
-
-#### 2. Прежде чем приступать к новому заданию, обновите `master`
-
-Обновить свой репозиторий из репозитория Академии можно так:
-
-```
-# В вашей локальной копии переключитесь в ветку master
-git checkout master
-
-# Заберите изменения из репозитория Академии¹
-git pull academy master
-
-# Отправьте изменения в ваш форк на Гитхабе
-git push
-```
-
-¹ В `academy` должна быть ссылка на репозиторий Академии. Если его там нет, добавьте:
-
-```
-git remote add academy git@github.com:htmlacademy-univer-javascript-1/2432235-kekstagram-4.git
-```
-
-Когда вы обновили `master`, создайте ветку для нового задания:
-
-```
-git checkout -b module2-task1
-```
-
-`module2-task1` — это название ветки. Под описанием каждого задания в интерфейсе интенсива для вас будет указано правильное название ветки.
-
----
-
-#### Есть вопрос?
-
-Посмотрите [коллекцию часто задаваемых вопросов по Git](http://firstaidgit.ru).
+{
+  "name": "kekstagram",
+  "version": "26.0.0",
+  "private": true,
+  "description": "Личный проект «Кекстаграм» от HTML Academy",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:htmlacademy-univer-javascript-1/2432235-kekstagram-4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/htmlacademy-univer-javascript-1/2432235-kekstagram-4/issues"
+  },
+  "devDependencies": {
+    "browser-sync": "2.27.10",
+    "eslint": "8.15.0",
+    "eslint-config-htmlacademy": "5.1.2"
+  },
+  "license": "MIT",
+  "dependencies": {},
+  "scripts": {
+    "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
+    "lint": "eslint js/"
+  },
+  "engines": {
+    "node": "16.x",
+    "npm": "8.x"
+  }
+}

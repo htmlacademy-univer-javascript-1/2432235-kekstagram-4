@@ -1,4 +1,6 @@
-import { createImagesData } from './data.js';
-import { setupImageGallery } from './gallery/main.js';
-import './upload/main.js';
-setupImageGallery(createImagesData());
+import { generateData } from './data.js';
+import { createGallery } from './gallery/gallery.js';
+import { createForm } from './upload-form/form.js';
+
+createGallery(generateData());
+createForm();

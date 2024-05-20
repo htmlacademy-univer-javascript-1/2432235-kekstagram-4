@@ -1,33 +1,68 @@
-const COMMENTS_DISPLAY_LIMIT = 5;
-const container = document.querySelector('.social__comments');
-const shownCounter = document.querySelector('.social__comment-shown-count');
-const totalCounter = document.querySelector('.social__comment-total-count');
-const loaderButton = document.querySelector('.comments-loader');
+import { fillFragment } from '../util.js';
 
-const createComment = (commentsData) => commentsData.map((properties) => {
-  const {avatar, name, message} = properties;
-  const comment = document.createElement('li');
-  comment.innerHTML = '<img class="social__picture" src="" alt="" width="35" height="35"><p class="social__text"></p>';
-  comment.classList.add('social__comment');
-  comment.querySelector('.social__picture').src = avatar;
-  comment.querySelector('.social__picture').alt = name;
-  comment.querySelector('.social__text').textContent = message;
-  return comment;
-});
+const COMMENTS_PER_LOAD = 5;
 
-const currentCommentsData = [];
-const onLoaderButtonClick = () => {
-  container.append(...createComment(currentCommentsData.splice(0, COMMENTS_DISPLAY_LIMIT)));
-  shownCounter.textContent = container.childElementCount;
-  loaderButton.classList.toggle('hidden', !currentCommentsData.length);
+const commentTemplate = document.querySelector('.social__comment');
+const commentsContainerNode = document.querySelector('.social__comments');
+const currentCommentsCountNode = document.querySelector('.social__comment-shown-count');
+const loadCommentsButtonNode = document.querySelector('.social__comments-loader');
+
+let comments = [];
+let endCommentNumber = 0;
+
+const changeVisibleCommentsCount = (current) => {
+  currentCommentsCountNode.textContent = current;
 };
 
-const renderComments = (commentsData) => {
-  currentCommentsData.splice(0, currentCommentsData.length, ...commentsData);
-  container.replaceChildren();
-  totalCounter.textContent = commentsData.length;
-  loaderButton.addEventListener('click',onLoaderButtonClick);
-  loaderButton.click();
+const hideLoadCommentsButton = () => loadCommentsButtonNode.classList.add('hidden');
+
+const showLoadCommentsButton = () => loadCommentsButtonNode.classList.remove('hidden');
+
+const resetCommentData = () => {
+  endCommentNumber = 0;
+  comments = [];
+  loadCommentsButtonNode.removeEventListener('click', renderComments);
 };
 
-export {renderComments};
+const createCommentNode = ({ avatar, message, name }) => {
+  const commentNode = commentTemplate.cloneNode(true);
+  const commentPictureNode = commentNode.querySelector('.social__picture');
+  commentPictureNode.src = avatar;
+  commentPictureNode.alt = name;
+  commentNode.querySelector('.social__text').textContent = message;
+  return commentNode;
+};
+
+const getComments = () => {
+  const commentsToShow = comments.slice(endCommentNumber, endCommentNumber + COMMENTS_PER_LOAD);
+  endCommentNumber += commentsToShow.length;
+  return commentsToShow;
+};
+
+const addComments = (currentComments) => {
+  const commentsFragment = fillFragment(currentComments, createCommentNode);
+  commentsContainerNode.append(commentsFragment);
+};
+
+function renderComments() {
+  const commentsToShow = getComments();
+  addComments(commentsToShow);
+  changeVisibleCommentsCount(endCommentNumber);
+  showLoadCommentsButton();
+
+  if (comments.length - endCommentNumber === 0) {
+    hideLoadCommentsButton();
+    resetCommentData();
+  }
+}
+
+const onLoadCommentsButtonClick = renderComments;
+
+const showComments = (newComments) => {
+  commentsContainerNode.innerHTML = '';
+  comments = newComments;
+  renderComments();
+  loadCommentsButtonNode.addEventListener('click', onLoadCommentsButtonClick);
+};
+
+export { showComments, resetCommentData };

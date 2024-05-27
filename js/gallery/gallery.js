@@ -12,6 +12,7 @@ const onGalleryClick = (event) => {
 
   const pictureId = +pictureNode.dataset.id;
   const picture = pictures.find((pictureData) => pictureData.id === pictureId);
+
   openFullscreen(picture);
 };
 

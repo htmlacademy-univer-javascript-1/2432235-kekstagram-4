@@ -1,8 +1,12 @@
-const effectListNode = document.querySelector('.effects__list');
-const effectLevelNode = document.querySelector('.effect-level');
-const effectSliderNode = document.querySelector('.effect-level__slider');
-const effectValueNode = document.querySelector('.effect-level__value');
-const submittedImageNode = document.querySelector('.img-upload__preview img');
+const imgUpload = document.querySelector('.img-upload__overlay');
+
+const effectListNode = imgUpload.querySelector('.effects__list');
+
+const effectLevelNode = imgUpload.querySelector('.effect-level');
+const effectSliderNode = effectLevelNode.querySelector('.effect-level__slider');
+const effectValueNode = effectLevelNode.querySelector('.effect-level__value');
+
+const submittedImageNode = imgUpload.querySelector('.img-upload__preview img');
 
 const effects = {
   chrome: {
@@ -23,7 +27,7 @@ const effects = {
     STEP: 1,
     getCssFilter: (value) => `invert(${value}%)`
   },
-  photos: {
+  phobos: {
     MIN: 0,
     MAX: 3,
     STEP: 0.1,

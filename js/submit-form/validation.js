@@ -5,19 +5,19 @@ const VALID_HASHTAG_SYMBOLS = /^#[a-zA-Z0-9а-яА-Я]{1,19}$/;
 const commentNode = document.querySelector('.text__description');
 const hashtagsNode = document.querySelector('.text__hashtags');
 
-const toHashtagsList = (hashtags) => hashtags
+const parseHahtagsList = (hashtags) => hashtags
   .split(' ')
   .map((hashtag) => hashtag.trim().toLowerCase())
   .filter((hashtag) => hashtag.length);
 
-const isRightHashtags = (hashtags) => toHashtagsList(hashtags).every((hashtag) => VALID_HASHTAG_SYMBOLS.test(hashtag));
+const isRightHashtags = (hashtags) => parseHahtagsList(hashtags).every((hashtag) => VALID_HASHTAG_SYMBOLS.test(hashtag));
 
 const isUniqueHashtags = (hashtags) => {
-  const hashtagsList = toHashtagsList(hashtags);
+  const hashtagsList = parseHahtagsList(hashtags);
   return hashtagsList.length === (new Set(hashtagsList)).size;
 };
 
-const isRightHashtagsCount = (hashtags) => toHashtagsList(hashtags).length <= MAX_HASHTAGS_COUNT;
+const isRightHashtagsCount = (hashtags) => parseHahtagsList(hashtags).length <= MAX_HASHTAGS_COUNT;
 
 const hashtagsRules = [
   {

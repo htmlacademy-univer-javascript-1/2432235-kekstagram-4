@@ -1,7 +1,8 @@
 import { closeModalOnEsc } from './util.js';
 
-const errorTemplate = document.querySelector('#error').content;
-const successTemplate = document.querySelector('#success').content;
+const body = document.body;
+const errorTemplate = body.querySelector('#error').content.querySelector('.message__modal');
+const successTemplate = body.querySelector('#success').content.querySelector('.message__modal');
 
 const onDocumentKeydown = (event) => closeModalOnEsc(event, closeModal);
 
@@ -15,18 +16,21 @@ const onModalClick = (event) => {
 
 function closeModal() {
   const modalNode = document.querySelector('.message__modal');
-  document.querySelector('.message__button').removeEventListener('click', onModalButtonClick);
+  modalNode.querySelector('.message__button').removeEventListener('click', onModalButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
-  modalNode.parentNode.removeChild(modalNode);
+  modalNode.remove();
 }
 
 const showMessage = (template) => {
   const modal = template.cloneNode(true);
-  document.body.append(modal);
-  const closeButtonNode = document.querySelector('.message__button');
+
+  body.append(modal);
+
+  const closeButtonNode = modal.querySelector('.message__button');
+  body.querySelector('.message__modal').addEventListener('click', onModalClick);
+
   closeButtonNode.addEventListener('click', onModalButtonClick);
-  document.querySelector('.message__modal').addEventListener('click', onModalClick);
-  document.body.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const showError = (title, buttonText = null) => {

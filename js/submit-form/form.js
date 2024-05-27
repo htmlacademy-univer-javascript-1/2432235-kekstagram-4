@@ -3,18 +3,22 @@ import { addValidators } from './validation.js';
 import { initEffects, removeEffect } from './effects.js';
 import { sendUserPictures } from '../api.js';
 
+const body = document.body;
+
 const submitFormNode = document.querySelector('.img-upload__form');
-const uploadOverlayNode = document.querySelector('.img-upload__overlay');
-const submitInputNode = document.querySelector('.img-upload__input');
-const submittedImageNode = document.querySelector('.img-upload__preview img');
-const sendButtonNode = document.querySelector('.img-upload__submit');
-const closeIconNode = document.querySelector('.img-upload__cancel');
+const uploadOverlayNode = submitFormNode.querySelector('.img-upload__overlay');
+const submitInputNode = submitFormNode.querySelector('.img-upload__input');
+const submittedImageNode = submitFormNode.querySelector('.img-upload__preview img');
+const sendButtonNode = submitFormNode.querySelector('.img-upload__submit');
+const closeIconNode = submitFormNode.querySelector('.img-upload__cancel');
 
-const effectPreviewNodes = document.querySelectorAll('.effects__preview');
 
-const scaleValueNode = document.querySelector('.scale__control--value');
-const scaleUpButtonNode = document.querySelector('.scale__control--bigger');
-const scaleDownButtonNode = document.querySelector('.scale__control--smaller');
+const effectPreviewNodes = submitFormNode.querySelectorAll('.effects__preview');
+
+const imgUploadScale = submitFormNode.querySelector('.img-upload__scale');
+const scaleValueNode = imgUploadScale.querySelector('.scale__control--value');
+const scaleUpButtonNode = imgUploadScale.querySelector('.scale__control--bigger');
+const scaleDownButtonNode = imgUploadScale.querySelector('.scale__control--smaller');
 
 const Zoom = {
   MIN: 25,
@@ -51,8 +55,11 @@ const initForm = () => {
 
 const openUploadImageForm = () => {
   uploadOverlayNode.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  document.querySelector('.effect-level').classList.add('hidden');
+  body.classList.add('modal-open');
+
+  submitFormNode.querySelector('.effect-level').classList.add('hidden');
+
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const onChangeUploadInput = () => {
@@ -68,16 +75,19 @@ const onChangeUploadInput = () => {
 };
 
 const closeUploadImageForm = () => {
-  uploadOverlayNode.scrollTop = 0;
-  uploadOverlayNode.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  submittedImageNode.style.transform = 'none';
-  submitFormNode.reset();
-  pristine.reset();
-  removeEffect();
+  if(!document.querySelector('.error')){
+    uploadOverlayNode.scrollTop = 0;
+    uploadOverlayNode.classList.add('hidden');
+    body.classList.remove('modal-open');
+    submittedImageNode.style.transform = 'none';
+    document.removeEventListener('keydown', onDocumentKeydown);
+    submitFormNode.reset();
+    pristine.reset();
+    removeEffect();
+  }
 };
 
-const onDocumentKeydown = (event) => closeModalOnEsc(event, closeUploadImageForm);
+function onDocumentKeydown (event) {closeModalOnEsc(event, closeUploadImageForm);}
 
 const onCloseIconClick = closeUploadImageForm;
 
@@ -86,17 +96,17 @@ async function onsubmitFormSubmit(event) {
   sendButtonNode.disabled = true;
   const isSuccessSubmit = await sendUserPictures(new FormData(submitFormNode));
   sendButtonNode.disabled = false;
-
   if (isSuccessSubmit) {
+    uploadOverlayNode.style.zIndex = 0;
     closeUploadImageForm();
   } else {
-    uploadOverlayNode.classList.add('hidden');
     submitInputNode.value = '';
-    document.body.classList.remove('modal-open');
+    uploadOverlayNode.style.zIndex = 0;
   }
 }
 
 submitInputNode.addEventListener('change', onChangeUploadInput);
 closeIconNode.addEventListener('click', onCloseIconClick);
-document.addEventListener('keydown', onDocumentKeydown);
+
+
 export { initForm };

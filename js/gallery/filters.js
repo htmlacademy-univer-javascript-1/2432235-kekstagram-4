@@ -3,7 +3,6 @@ import { clearGallery } from './gallery.js';
 
 const RANDOM_PICTURES_COUNT = 10;
 const filtersNodes = document.querySelector('.img-filters');
-
 const Filter = {
   'filter-default': (pictures) => pictures,
   'filter-random': (pictures) => sortRandomly(pictures).slice(0, RANDOM_PICTURES_COUNT),
@@ -21,8 +20,10 @@ const onFiltersClick = (event) => {
   const filterType = filterButtonNode.id;
   if (filterType === activeFilter) { return; }
 
-  document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+  filtersNodes.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
+
   filterButtonNode.classList.add('img-filters__button--active');
+
   activeFilter = filterType;
 
   const pictures = Filter[activeFilter](picturesData);

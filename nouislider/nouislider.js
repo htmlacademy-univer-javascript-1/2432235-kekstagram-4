@@ -1,4 +1,4 @@
-/*! noUiSlider - 15.6.0 - 05/01/2022 */
+/*! nouislider - 15.6.0 - 05/01/2022 */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -2237,7 +2237,7 @@
       target.noUiSlider = api;
       return api;
   }
-  var noUiSlider = {
+  var nouislider = {
       // Exposed for unit testing, don't use this in your application.
       __spectrum: Spectrum,
       // A reference to the default classes, allows global changes.
@@ -2248,7 +2248,7 @@
 
   exports.create = initialize;
   exports.cssClasses = cssClasses;
-  exports["default"] = noUiSlider;
+  exports["default"] = nouislider;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 

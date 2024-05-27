@@ -1,18 +1,18 @@
-import { showError, showSuccess } from './show-message.js';
+import { showError, showSuccess } from "./show-message.js";
 
-const BASE = 'https://29.javascript.pages.academy/kekstagram';
+const BASE = "https://29.javascript.htmlacademy.pro/kekstagram";
 
 const routes = {
   getUserPictures: {
     URL: `${BASE}/data`,
-    METHOD: 'GET',
-    ERROR: 'Не удалось загрузить данные, попробуйте позже'
+    METHOD: "GET",
+    ERROR: "Не удалось загрузить данные, попробуйте позже",
   },
   sendUserPictures: {
     URL: BASE,
-    METHOD: 'POST',
-    ERROR: 'Не удалось отправить данные, попробуйте ещё раз'
-  }
+    METHOD: "POST",
+    ERROR: "Не удалось отправить данные, попробуйте ещё раз",
+  },
 };
 
 const makeResponse = async ({ URL, METHOD, ERROR }, body = null) => {
@@ -24,6 +24,7 @@ const makeResponse = async ({ URL, METHOD, ERROR }, body = null) => {
     return await response.json();
   } catch (error) {
     throw new Error(ERROR);
+    
   }
 };
 
@@ -32,7 +33,7 @@ const getUserPictures = async () => {
     const data = await makeResponse(routes.getUserPictures);
     return data;
   } catch (error) {
-    showError(error.message, 'Хорошо');
+    showError(error.message, "Хорошо");
   }
 };
 

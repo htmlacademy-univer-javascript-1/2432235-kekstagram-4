@@ -3,9 +3,11 @@ import { fillFragment } from '../util.js';
 const COMMENTS_PER_LOAD = 5;
 
 const commentTemplate = document.querySelector('.social__comment');
-const commentsContainerNode = document.querySelector('.social__comments');
-const currentCommentsCountNode = document.querySelector('.social__comment-shown-count');
-const loadCommentsButtonNode = document.querySelector('.social__comments-loader');
+
+const bigPictureSocial = document.querySelector('.big-picture__social');
+const commentsContainerNode = bigPictureSocial.querySelector('.social__comments');
+const currentCommentsCountNode = bigPictureSocial.querySelector('.loaded-comments-count');
+const loadCommentsButtonNode = bigPictureSocial.querySelector('.social__comments-loader');
 
 let comments = [];
 let endCommentNumber = 0;

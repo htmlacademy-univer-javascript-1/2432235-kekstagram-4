@@ -6,8 +6,7 @@ function checkLength(text, maxLen) {
     return false;
   }
 }
-checkLength('писюн',5);
-
+checkLength('чашка',5);
 
 function findPalindrome (text) {
   let abc = text.replaceAll(' ');

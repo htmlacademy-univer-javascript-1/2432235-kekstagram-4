@@ -23,4 +23,3 @@ function findPalindrome (text) {
   }
 }
 findPalindrome('довод');
-

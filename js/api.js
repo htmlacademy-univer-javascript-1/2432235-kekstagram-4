@@ -49,4 +49,3 @@ const sendUserPictures = async (body) => {
 };
 
 export { getUserPictures, sendUserPictures };
- 

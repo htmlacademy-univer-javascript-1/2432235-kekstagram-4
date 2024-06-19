@@ -1,11 +1,8 @@
 const imgUpload = document.querySelector('.img-upload__overlay');
-
 const effectListNode = imgUpload.querySelector('.effects__list');
-
 const effectLevelNode = imgUpload.querySelector('.effect-level');
 const effectSliderNode = effectLevelNode.querySelector('.effect-level__slider');
 const effectValueNode = effectLevelNode.querySelector('.effect-level__value');
-
 const submittedImageNode = imgUpload.querySelector('.img-upload__preview img');
 
 const effects = {
